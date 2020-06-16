@@ -40,6 +40,34 @@ add-highlighter shared/julia/char/ region \B(\\\w+) \b fill value
 add-highlighter shared/julia/comment-block region '#=' '=#'  fill comment
 add-highlighter shared/julia/comment-line region '#' '$'  fill comment
 
+
+# Strings
+# ‾‾‾‾‾‾‾
+add-highlighter shared/julia/string  region (\B|^)(") (?<!\\)(\\\\)*"  regions
+add-highlighter shared/julia/string/ default-region fill string
+add-highlighter shared/julia/string/ region \B(\$)\w \b ref julia
+add-highlighter shared/julia/string/ region \B(\$\()\b\w \b(\))\B ref julia
+
+# String interpolation
+add-highlighter shared/julia/code/ regex \B(\$\w+)\b 0:value
+add-highlighter shared/julia/code/ regex \B(\$\(.+\))\B 0:value
+
+# Command blocks
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+add-highlighter shared/julia/commandblock region -match-capture (\B|^)(```) (?<!\\)(\\\\)*(```) regions
+add-highlighter shared/julia/commandblock/ default-region fill string
+# String interpolation
+add-highlighter shared/julia/commandblock/ region (\B|^)(\$)\w \b ref julia
+add-highlighter shared/julia/commandblock/ region (\B|^)(\$\()\b\w \b(\))\B ref julia
+
+# Command - inline
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+add-highlighter shared/julia/command region (\B|^)(`) (?<!\\)(\\\\)*(`) regions
+add-highlighter shared/julia/command/ default-region fill string
+# String interpolation
+add-highlighter shared/julia/command/ region \B(\$)\w \b ref julia
+add-highlighter shared/julia/command/ region \B(\$\()\b\w \b(\))\B ref julia
+
 add-highlighter shared/julia/code/ regex \b(if|else|elseif|while|for|begin|end|quote|try|catch|return|local|abstract|function|macro|ccall|finally|typealias|break|continue|type|global|module|using|import|export|const|let|bitstype|do|in|baremodule|importall|immutable|mutable|struct)\b 0:keyword
 add-highlighter shared/julia/code/ regex \b(Number|Real|BigInt|Integer|UInt|UInt8|UInt16|UInt32|UInt64|UInt128|Int|Int8|Int16|Int32|Int64|Int128|BigFloat|FloatingPoint|Float16|Float32|Float64|Complex128|Complex64|Bool|Cuchar|Cshort|Cushort|Cint|Cuint|Clonglong|Culonglong|Cintmax_t|Cuintmax_t|Cfloat|Cdouble|Cptrdiff_t|Cssize_t|Csize_t|Cchar|Clong|Culong|Cwchar_t|Char|ASCIIString|UTF8String|ByteString|SubString|AbstractString|Array|DArray|AbstractArray|AbstractVector|AbstractMatrix|AbstractSparseMatrix|SubArray|StridedArray|StridedVector|StridedMatrix|VecOrMat|StridedVecOrMat|DenseArray|SparseMatrixCSC|BitArray|Range|OrdinalRange|StepRange|UnitRange|FloatRange|Tuple|NTuple|Vararg|DataType|Symbol|Function|Vector|Matrix|Union|Type|Any|Complex|String|Ptr|Void|Exception|Task|Signed|Unsigned|Associative|Dict|IO|IOStream|Rational|Regex|RegexMatch|Set|IntSet|Expr|WeakRef|ObjectIdDict|AbstractRNG|MersenneTwister)\b 0:type
 
